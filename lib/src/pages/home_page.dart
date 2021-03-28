@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
-class HomePageTemp extends StatelessWidget {
+import 'package:flutter_application_1/src/providers/menu_provider.dart';
+
+class HomePage extends StatelessWidget {
   var opciones = [
     'opcion',
     'opcion',
@@ -26,24 +27,26 @@ class HomePageTemp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hola'),
-        centerTitle: true,
+        title: Text('Componentes'),
       ),
-      body: ListView(children: _crearItems2()),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        hoverColor: Colors.orange,
-        mouseCursor: MouseCursor.uncontrolled,
-        onPressed: (){
-          print('click');
-        },
-      ),
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: _lista(),
     );
   }
 
-  List<Widget> _crearItems() {
+  Widget _lista() {
+
+    menuProvider.cargarData().then((opciones) {
+
+      print('lista');
+      print(opciones);
+    });
+
+    return ListView(
+      children: _crearItems2(),
+    );
+  }
+
+  _listaItems() {
     return opciones.map((item) {
       return Column(
         children: <Widget>[
@@ -72,6 +75,7 @@ class HomePageTemp extends StatelessWidget {
         leading: Icon(Icons.work_sharp),
         trailing: Icon(Icons.arrow_forward),
       );
+
       lista.add(tempWidget);
     }
 
@@ -79,13 +83,11 @@ class HomePageTemp extends StatelessWidget {
   }
 
   Color _randomColor(index) {
-    print('indez' + index.toString());
+    //print('indez' + index.toString());
     var color;
     if (index % 2 == 0) {
-      color = Colors.lightBlue[100];
-    } else if(index % 3 == 0){
-      color = Colors.lightBlue[300];
-    }else{
+      color = Colors.lightBlue[200];
+    } else {
       color = Colors.lightBlue[300];
     }
     return color;
