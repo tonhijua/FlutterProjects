@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/src/providers/menu_provider.dart';
+import 'package:flutter_application_1/src/utils/icon_String_util.dart';
 
 class HomePage extends StatelessWidget {
-  var opciones = [
+  var opcionesByArray = [
     'opcion',
     'opcion',
     'opcion',
@@ -34,25 +35,41 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _lista() {
+    return FutureBuilder(
+      future: menuProvider.cargarData(), // Recibe un metodo del tipo Future
+      //initialData: [], // Data que contiene mientras espera la respuesta del future
+      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+        print(snapshot.data);
 
-    menuProvider.cargarData().then((opciones) {
-
-      print('lista');
-      print(opciones);
-    });
-
-    return ListView(
-      children: _crearItems2(),
+        return ListView(children: _listaItems3(snapshot.data));
+      },
     );
   }
 
+  List<Widget> _listaItems3(List<dynamic> data) {
+    final List<Widget> opciones = [];
+
+    data.forEach((element) {
+      final widgetTemp = ListTile(
+          title: Text(element['texto']),
+          leading: getIcon(element['icon']),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: (){},
+          );
+
+      opciones..add(widgetTemp)..add(Divider());
+    });
+
+    return opciones;
+  }
+
   _listaItems() {
-    return opciones.map((item) {
+    return opcionesByArray.map((item) {
       return Column(
         children: <Widget>[
           ListTile(
               title: Text(item),
-              tileColor: _randomColor(opciones.length),
+              tileColor: _randomColor(opcionesByArray.length),
               subtitle: Text('subtitle'),
               leading: Icon(Icons.add_comment),
               trailing: Icon(Icons.work_sharp),
@@ -67,9 +84,9 @@ class HomePage extends StatelessWidget {
   List<Widget> _crearItems2() {
     List<Widget> lista = new List<Widget>();
 
-    for (int i = 0; i < opciones.length; i++) {
+    for (int i = 0; i < opcionesByArray.length; i++) {
       final tempWidget = ListTile(
-        title: Text(opciones[i]),
+        title: Text(opcionesByArray[i]),
         subtitle: Text('Subtitle'),
         tileColor: _randomColor(i),
         leading: Icon(Icons.work_sharp),
