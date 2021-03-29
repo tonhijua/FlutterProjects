@@ -41,21 +41,26 @@ class HomePage extends StatelessWidget {
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         print(snapshot.data);
 
-        return ListView(children: _listaItems3(snapshot.data));
+        return ListView(
+          children: _listaItems3(snapshot.data, context),
+        );
       },
     );
   }
 
-  List<Widget> _listaItems3(List<dynamic> data) {
+  List<Widget> _listaItems3(List<dynamic> data, BuildContext context) {
     final List<Widget> opciones = [];
 
     data.forEach((element) {
       final widgetTemp = ListTile(
-          title: Text(element['texto']),
-          leading: getIcon(element['icon']),
-          trailing: Icon(Icons.arrow_forward),
-          onTap: (){},
-          );
+        title: Text(element['texto']),
+        leading: getIcon(element['icon']),
+        trailing: Icon(Icons.arrow_forward),
+        onTap: () {
+          print(element['ruta']);
+          Navigator.pushNamed(context, '/${element['ruta']}'); 
+        },
+      );
 
       opciones..add(widgetTemp)..add(Divider());
     });
