@@ -29,8 +29,15 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Componentes'),
+        leading: Container(),
       ),
       body: _lista(),
+      floatingActionButton: FloatingActionButton( 
+        child: Icon(Icons.close),
+        onPressed: (){
+           Navigator.pushNamed(context, '/login'); 
+        },
+      ),
     );
   }
 
@@ -49,7 +56,7 @@ class HomePage extends StatelessWidget {
   }
 
   List<Widget> _listaItems3(List<dynamic> data, BuildContext context) {
-    final List<Widget> opciones = [];
+    final List<Widget> elementos = [];
 
     data.forEach((element) {
       final widgetTemp = ListTile(
@@ -62,10 +69,10 @@ class HomePage extends StatelessWidget {
         },
       );
 
-      opciones..add(widgetTemp)..add(Divider());
+      elementos..add(widgetTemp)..add(Divider());
     });
 
-    return opciones;
+    return elementos;
   }
 
   _listaItems() {

@@ -31,9 +31,7 @@ class HomePageTemp extends StatelessWidget {
       ),
       body: ListView(children: _crearItems2()),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        hoverColor: Colors.orange,
-        mouseCursor: MouseCursor.uncontrolled,
+        child: Icon(Icons.close),
         onPressed: (){
           print('click');
         },
